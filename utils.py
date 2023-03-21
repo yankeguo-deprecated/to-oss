@@ -1,7 +1,16 @@
 import os
+import shutil
 import subprocess
 
 import oss2
+
+
+def git_clone(output, url, lfs=False, purge=False):
+    if lfs:
+        subprocess.run(["git", "lfs", "install"], check=True)
+    subprocess.run(["git", "clone", url, "--depth", '1', '--recursive', output], check=True)
+    if purge:
+        shutil.rmtree(os.path.join(output, ".git"))
 
 
 def tar_archive(tar_file, src_file):

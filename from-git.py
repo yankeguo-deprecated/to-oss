@@ -1,21 +1,25 @@
-import os
-import shutil
 import sys
 import datetime
 
 import urllib3.util
 
-from utils import tar_archive, oss_upload
+from utils import tar_archive, oss_upload, git_clone
 
 
 def main():
-    u: urllib3.util.Url = urllib3.util.parse_url(sys.argv[1].strip())
+    git_url = sys.argv[1].strip()
 
-    shutil.rmtree(os.path.join("data", ".git"))
+    print("cloning repository")
+
+    git_clone("data", git_url, lfs=True, purge=True)
+
+    print("creating data.tar")
 
     tar_archive("data.tar", "data")
 
     print("data.tar created")
+
+    u: urllib3.util.Url = urllib3.util.parse_url(git_url)
 
     key = "repos/" + u.hostname + "/" + \
           u.path.removesuffix(".git").lower().replace('/', '--') + "-" + \

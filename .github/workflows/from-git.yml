@@ -18,12 +18,6 @@ jobs:
           python-version: "3.10"
           cache: "pip"
       - run: pip install -r requirements.txt
-      - uses: actions/checkout@v3
-        with:
-          repository: ${{inputs.git_url}}
-          path: data
-          lfs: true
-          submodules: true
       - run: python from-git.py "${{inputs.git_url}}"
         env:
           OSS_BUCKET: ${{secrets.OSS_BUCKET}}
