@@ -7,7 +7,7 @@ download various resources and upload to aliyun oss
 **Basic Setup**
 
 * Clone this repository to your own GitHub Account
-* Set [GitHub Actions Secrets](settings/secrets/actions):
+* Set GitHub Actions Secrets:
     * `OSS_BUCKET`, OSS bucket name
     * `OSS_ENDPOINT`, endpoint of your oss bucket, 'https://oss-accelerate.aliyuncs.com' is suggested
     * `OSS_ACCESS_KEY_ID`
@@ -15,14 +15,14 @@ download various resources and upload to aliyun oss
 
 **From `diffusers`**
 
-Run [Github Actions](actions/workflows/from-diffusers.yml) with Huggingface model id
+Run GitHub Actions `from-diffusers` with Huggingface model id
 
 **From `civitai`**
 
-* Set [GitHub Actions Secrets](settings/secrets/actions)
+* Set GitHub Actions Secrets
     * `CIVITAI_TOKEN`
 
-* Run [Github Actions](actions/workflows/from-civitai.yml) with Civitai model checksum
+* Run GitHub Actions `from-civitai` with Civitai model sha256 checksum
 
 ## Donation
 
