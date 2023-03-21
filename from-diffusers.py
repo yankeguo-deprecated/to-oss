@@ -24,7 +24,7 @@ def main():
 
     print("downloaded")
 
-    tar_archive("data.tar", "data")
+    tar_archive("data.tar", "data", remove=True)
 
     print("data.tar created")
 

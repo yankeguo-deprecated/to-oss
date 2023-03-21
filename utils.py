@@ -13,8 +13,11 @@ def git_clone(output, url, lfs=False, purge=False):
         shutil.rmtree(os.path.join(output, ".git"))
 
 
-def tar_archive(tar_file, src_file):
-    subprocess.run(["tar", "-cvf", tar_file, src_file], check=True)
+def tar_archive(tar_file, src_file, remove=False):
+    args = ["tar", "-cvf", tar_file, src_file]
+    if remove:
+        args.append("--remove-files")
+    subprocess.run(args, check=True)
 
 
 def curl_download(local_file: str, file_url: str):
