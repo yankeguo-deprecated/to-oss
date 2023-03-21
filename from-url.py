@@ -1,3 +1,4 @@
+import os
 import posixpath
 import sys
 
@@ -11,17 +12,17 @@ def main():
 
     u: urllib3.util.Url = urllib3.util.parse_url(remote_url)
 
-    filename = posixpath.basename(u.path)
+    local_path = os.path.join("data", posixpath.basename(u.path))
 
-    print(f"downloading {filename}")
+    print(f"downloading {local_path}")
 
-    curl_download(filename, remote_url)
+    curl_download(local_path, remote_url)
 
     key = "files/" + u.hostname + u.path
 
     print(f"uploading {key}")
 
-    oss_upload(key, filename)
+    oss_upload(key, local_path)
 
     print("done")
 
