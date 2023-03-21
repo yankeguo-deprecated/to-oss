@@ -1,0 +1,4 @@
+diffusers[torch]==0.14.0
+transformers==4.27.1
+safetensors==0.3.0
+oss2==2.17.0

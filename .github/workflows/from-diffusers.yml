@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.from-diffusers.txt
       - run: python from-diffusers.py "${{inputs.model_id}}"
         env:
           OSS_BUCKET: ${{secrets.OSS_BUCKET}}

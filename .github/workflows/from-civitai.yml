@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.from-civitai.txt
       - run: python from-civitai.py "${{inputs.model_shasum}}"
         env:
           CIVITAI_TOKEN: ${{secrets.CIVITAI_TOKEN}}
