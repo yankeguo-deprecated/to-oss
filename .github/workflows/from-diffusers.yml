@@ -1,0 +1,26 @@
+name: from-diffusers
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_id:
+        description: "huggingface model_id, 'runwayml/stable-diffusion-v1-5' for example"
+        required: true
+        type: string
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: pip install -r from-diffusers/requirements.txt
+      - run: python from-diffusers/main.py "${{inputs.model_id}}"
+        env:
+          OSS_BUCKET: ${{secrets.OSS_BUCKET}}
+          OSS_ENDPOINT: ${{secrets.OSS_ENDPOINT}}
+          OSS_ACCESS_KEY_ID: ${{secrets.OSS_ACCESS_KEY_ID}}
+          OSS_ACCESS_KEY_SECRET: ${{secrets.OSS_ACCESS_KEY_SECRET}}
