@@ -7,6 +7,8 @@ import torch
 import re
 from diffusers import StableDiffusionPipeline
 
+from utils import tar_archive, oss_upload
+
 re_bad_filename = re.compile(r'[^0-9a-zA-Z-]+')
 
 
@@ -22,17 +24,9 @@ def main():
 
     print("downloaded")
 
-    subprocess.run(["tar", "-cvf", "data.tar", "data"], check=True)
+    tar_archive("data.tar", "data")
 
     print("data.tar created")
-
-    oss2.defaults.connection_pool_size = 5
-
-    bucket = oss2.Bucket(
-        oss2.Auth(os.getenv('OSS_ACCESS_KEY_ID'), os.getenv('OSS_ACCESS_KEY_SECRET')),
-        os.getenv('OSS_ENDPOINT'),
-        os.getenv('OSS_BUCKET'),
-    )
 
     key = "models/huggingface/diffusers/" + \
           re_bad_filename.sub('-', model_id) + \
@@ -42,21 +36,7 @@ def main():
 
     print("upload to: " + key)
 
-    ctx = {'last_rate': 0}
-
-    def progress_callback(consumed_bytes, total_bytes):
-        if total_bytes:
-            rate = int(100 * (float(consumed_bytes) / float(total_bytes)))
-            if rate != ctx['last_rate']:
-                print(f'uploading: {rate}%')
-                ctx['last_rate'] = rate
-
-    oss2.resumable_upload(
-        bucket, key, "data.tar",
-        multipart_threshold=100 * 1024 * 1024,
-        progress_callback=progress_callback,
-        num_threads=4,
-    )
+    oss_upload(key, "data.tar")
 
     print("done")
 
