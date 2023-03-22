@@ -28,6 +28,10 @@ Run GitHub Actions `from-diffusers` with Huggingface model id
 
 * Run GitHub Actions `from-git` with Git http url
 
+**From `url`**
+
+* Run GitHub Actions `from-url` with plain url
+
 ## Donation
 
 See https://guoyk.xyz/donation
